@@ -12,11 +12,12 @@ public class PlayerControls : MonoBehaviour
         get;
         private set;
     }
+    GameMenu menu;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        menu = FindObjectOfType<GameMenu>();
     }
 
     // Update is called once per frame
@@ -33,5 +34,11 @@ public class PlayerControls : MonoBehaviour
     public void OnScale(InputValue value)
     {
         scaleFactor = value.Get<float>();
+    }
+
+    public void OnCancel()
+    {
+        Time.timeScale = 0.0f;
+        menu.PauseResume();
     }
 }
