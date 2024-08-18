@@ -5,11 +5,12 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
 
+    [SerializeField] float scaleFactor = 0.0f;
     ObjectResizer objRe = new ObjectResizer();
     // Start is called before the first frame update
     void Start()
     {
-        objRe.SetScaleFactor(1.0005f);
+        objRe.SetScaleFactor(scaleFactor);
     }
 
     // Update is called once per frame
