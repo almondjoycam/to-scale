@@ -20,12 +20,18 @@ public class ObjectResizer
     //resizes game object
     public void ResizeObject(GameObject obj) {
         Debug.Log("resizing");
-        obj.transform.localScale = obj.transform.localScale * scaleFactor;
+        obj.transform.localScale *= scaleFactor;
         for(int i = 0; i < obj.transform.childCount; i++) {
             var objChild = obj.transform.GetChild(i);
-        
+
             objChild.transform.localScale = objChild.transform.localScale
                 * scaleFactor;
         }
+    }
+
+    // ResizeObject overload with Resizeable
+    public void ResizeObject(IResizeable obj, float resizeTime)
+    {
+        obj.Resize(scaleFactor, resizeTime);
     }
 }

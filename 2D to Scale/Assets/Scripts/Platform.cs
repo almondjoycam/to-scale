@@ -16,7 +16,7 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        objRe.ResizeObject(gameObject);             
+        objRe.ResizeObject(gameObject);
     }
 
     private void OnMouseUp() {
