@@ -33,12 +33,20 @@ public class PlayerControls : MonoBehaviour
 
     public void OnScale(InputValue value)
     {
-        scaleFactor = value.Get<float>();
+        scaleFactor = value.Get<int>();
     }
 
     public void OnCancel()
     {
         Time.timeScale = 0.0f;
         menu.PauseResume();
+    }
+
+    void OnCollisionEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Resizeable"))
+        {
+            // Resize here
+        }
     }
 }

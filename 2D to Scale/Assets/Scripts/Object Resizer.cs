@@ -24,7 +24,8 @@ public class ObjectResizer
         for(int i = 0; i < obj.transform.childCount; i++) {
             var objChild = obj.transform.GetChild(i);
         
-            objChild.transform.localScale = objChild.transform.localScale * scaleFactor;
+            objChild.transform.localScale = objChild.transform.localScale
+                * scaleFactor;
         }
     }
 }
