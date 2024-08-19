@@ -58,13 +58,18 @@ public class PlayerControls : MonoBehaviour
         {
             move.y += Time.fixedDeltaTime * gravityForce * rb.mass;
         }
-        else if (groundCollider != null)
+        else
         {
-            rb.MovePosition(Physics2D.ClosestPoint(
-                transform.position,
-                groundCollider
-            ) + Vector2.up * (rend.size.y / 2));
+            rb.MovePosition((Vector2)transform.position
+                + (move * Time.fixedDeltaTime));
         }
+//         else if (groundCollider != null)
+//         {
+//             rb.MovePosition(Physics2D.ClosestPoint(
+//                 transform.position,
+//                 groundCollider
+//             ) + Vector2.up * (rend.size.y / 2));
+//         }
 
         // Direction
         if (move.x < 0)
@@ -75,8 +80,7 @@ public class PlayerControls : MonoBehaviour
         {
             rend.flipX = false;
         }
-        rb.MovePosition((Vector2)transform.position
-            + (move * Time.fixedDeltaTime));
+
         PlayerResize();
 //         transform.Translate(move * speed * Time.deltaTime);
     }
@@ -98,9 +102,15 @@ public class PlayerControls : MonoBehaviour
         if (isGrounded)
         {
             Gravity(true);
-            move.y = jumpForce;
+//             move.y = jumpForce;
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+
+//     IEnumerator JumpRoutine()
+//     {
+//         for (float f =
+//     }
 
     void Gravity(bool dynamic)
     {

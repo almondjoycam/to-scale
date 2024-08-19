@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(TilemapCollider2D))]
 public class ResizeableTilemap : MonoBehaviour, IResizeable
 {
     TilemapCollider2D tileCollider;
