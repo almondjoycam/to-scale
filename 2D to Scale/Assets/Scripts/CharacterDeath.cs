@@ -6,20 +6,20 @@ using UnityEngine.SceneManagement;
 public class CharacterDeath : MonoBehaviour
 {
 
-    public AudioSource audioPlayer;
+    AudioSource audioPlayer;
     public AudioClip deathSound;
 
-    int currentSceneIndex;
+    PlayerControls player;
 
     void Start()
     {
         audioPlayer = FindObjectOfType<AudioSource>();
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
             //player hit death zone
         if (other.gameObject.CompareTag("Player")){
+            player = other.gameObject.GetComponent<PlayerControls>();
             //play sound
             audioPlayer.PlayOneShot(deathSound);
             //reset level
@@ -30,7 +30,10 @@ public class CharacterDeath : MonoBehaviour
 
     void ReloadScene()
     {
-        SceneManager.LoadScene(currentSceneIndex);
+        if (player)
+        {
+            player.OnReset();
+        }
     }
 }
 

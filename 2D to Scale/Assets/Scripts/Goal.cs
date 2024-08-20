@@ -9,7 +9,9 @@ public class Goal : MonoBehaviour
     public AudioSource audioPlayer;
     public AudioClip winSound;
     [SerializeField]
-    string nextLevelName;
+    int nextLevelIndex;
+    [SerializeField]
+    GameObject victoryScreen;
 
     void Start()
     {
@@ -24,12 +26,12 @@ public class Goal : MonoBehaviour
             audioPlayer.PlayOneShot(winSound);
             
             //Load Scene
-            Invoke("NextScene", winSound.length);
+            victoryScreen.SetActive(true);
         }
     }
 
-    void NextScene()
+    public void NextScene()
     {
-        SceneManager.LoadScene(nextLevelName);
+        SceneManager.LoadScene(nextLevelIndex);
     }
 }

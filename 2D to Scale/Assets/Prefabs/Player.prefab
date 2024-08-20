@@ -101,10 +101,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allDirectionMovement: 0
-  speed: 5
-  jumpForce: 25
-  scaleFactor: 1.3
-  sizeTime: 0.5
+  speed: 2
+  jumpForce: 10
+  scaleFactor: 1.1
+  sizeTime: 0.2
 --- !u!114 &1002202343697396849
 MonoBehaviour:
   m_ObjectHideFlags: 0

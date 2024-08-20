@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -36,11 +37,14 @@ public class PlayerControls : MonoBehaviour
     SpriteRenderer rend;
 
 
-
+    // Scenes
+    int currentSceneIndex;
 
     // Start is called before the first frame update
     void Start()
     {
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
         gravityForce = Physics2D.gravity.y;
         menu = FindObjectOfType<GameMenu>();
 
@@ -97,15 +101,21 @@ public class PlayerControls : MonoBehaviour
         if (isGrounded)
         {
             Gravity(true);
-            move.y = jumpForce;
+            StartCoroutine(JumpRoutine(3));
+//             move.y = jumpForce;
 //             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 
-//     IEnumerator JumpRoutine()
-//     {
-//         for (float f =
-//     }
+    IEnumerator JumpRoutine(int numFrames)
+    {
+        for (float i = 0; i < numFrames; i++)
+        {
+            move.y = Mathf.Lerp(0, jumpForce, i / numFrames);
+            yield return null;
+        }
+        yield break;
+    }
 
     void Gravity(bool dynamic)
     {
@@ -133,13 +143,27 @@ public class PlayerControls : MonoBehaviour
         menu.PauseResume();
     }
 
+    public void OnReset()
+    {
+        SceneManager.LoadScene(currentSceneIndex);
+    }
+
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.gameObject.layer == 3
-            && other.GetContact(0).normal.y == 1)
+        if (other.collider.gameObject.layer == 3)
         {
-            Gravity(false);
             groundCollider = other.collider;
+            for (int i = 0; i < other.contactCount; i++)
+            {
+                if (other.GetContact(i).normal.y >= 0.95f)
+                {
+                    Gravity(false);
+                }
+                else
+                {
+                    move += other.GetContact(i).normal;
+                }
+            }
         }
     }
 
@@ -147,11 +171,20 @@ public class PlayerControls : MonoBehaviour
     {
         GameObject otherObj = other.collider.gameObject;
         resizeable = otherObj.GetComponent<IResizeable>();
-        if (otherObj.layer == 3
-            && other.GetContact(0).normal.y == 1)  // Ground layer
+        if (otherObj.layer == 3)  // Ground layer
         {
-            Gravity(false);
             groundCollider = other.collider;
+            for (int i = 0; i < other.contactCount; i++)
+            {
+                if (other.GetContact(i).normal.y >= 0.95f)
+                {
+                    Gravity(false);
+                }
+                else
+                {
+                    move += other.GetContact(i).normal * 0.01f;
+                }
+            }
         }
     }
 
@@ -172,7 +205,6 @@ public class PlayerControls : MonoBehaviour
         {
             return;
         }
-        transform.SetParent(resizeable.GetTransform(), false);
         if (scaleInput < 0)
         {
             shrinkify.ResizeObject(resizeable, sizeTime);
@@ -181,6 +213,5 @@ public class PlayerControls : MonoBehaviour
         {
             embiggen.ResizeObject(resizeable, sizeTime);
         }
-        transform.SetParent(null, true);
     }
 }

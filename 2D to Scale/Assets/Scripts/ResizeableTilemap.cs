@@ -25,14 +25,14 @@ public class ResizeableTilemap : MonoBehaviour, IResizeable
 
     IEnumerator ResizeEnumerator(float resizeTime, Vector3 formerScale)
     {
-        for (float t = 0; t < resizeTime; t += 0.2f)
+        for (float t = 0; t < resizeTime; t += Time.deltaTime)
         {
             transform.localScale = Vector3.Lerp(
                 formerScale,
                 formerScale * scaleFactor,
                 t / resizeTime
             );
-            yield return new WaitForSeconds(0.2f);
+            yield return null;
         }
         yield break;
     }
