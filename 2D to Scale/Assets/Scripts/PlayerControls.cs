@@ -35,6 +35,9 @@ public class PlayerControls : MonoBehaviour
     // Sprite and Animation
     SpriteRenderer rend;
 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +60,7 @@ public class PlayerControls : MonoBehaviour
         {
             move.y += Time.fixedDeltaTime * gravityForce * rb.mass;
         }
+
         rb.MovePosition((Vector2)transform.position
             + (move * Time.fixedDeltaTime));
 
@@ -113,7 +117,7 @@ public class PlayerControls : MonoBehaviour
         else
         {
             isGrounded = true;
-            rb.velocity = Vector2.zero;
+            //rb.velocity = Vector2.zero;
             move.y = 0;
 //             rb.isKinematic = true;
         }
@@ -164,6 +168,10 @@ public class PlayerControls : MonoBehaviour
 
     void PlayerResize()
     {
+        if (resizeable == null)
+        {
+            return;
+        }
         transform.SetParent(resizeable.GetTransform());
         if (scaleInput < 0)
         {
