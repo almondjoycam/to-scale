@@ -20,10 +20,12 @@ public class PlayerControls : MonoBehaviour
     Collider2D groundCollider = null;
 
     // Gameplay
-    public float scaleFactor {
+    public float scaleInput {
         get;
         private set;
     }
+
+    [SerializeField] float scaleFactor;
     [SerializeField]
     [Range(0.0f, 2.0f)]
     float sizeTime = 0.5f;
@@ -36,6 +38,9 @@ public class PlayerControls : MonoBehaviour
     // Sprite and Animation
     SpriteRenderer rend;
 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +51,8 @@ public class PlayerControls : MonoBehaviour
         rb.isKinematic = false;
         rend = GetComponent<SpriteRenderer>();
 
-        embiggen.SetScaleFactor(2);
-        shrinkify.SetScaleFactor(0.5f);
+        embiggen.SetScaleFactor(scaleFactor);
+        shrinkify.SetScaleFactor(1.0f/scaleFactor);
     }
 
     // Update is called once per frame
@@ -58,11 +63,9 @@ public class PlayerControls : MonoBehaviour
         {
             move.y += Time.fixedDeltaTime * gravityForce * rb.mass;
         }
-        else
-        {
-            rb.MovePosition((Vector2)transform.position
+        
+        rb.MovePosition((Vector2)transform.position
                 + (move * Time.fixedDeltaTime));
-        }
 //         else if (groundCollider != null)
 //         {
 //             rb.MovePosition(Physics2D.ClosestPoint(
@@ -122,7 +125,7 @@ public class PlayerControls : MonoBehaviour
         else
         {
             isGrounded = true;
-            rb.velocity = Vector2.zero;
+            //rb.velocity = Vector2.zero;
             move.y = 0;
 //             rb.isKinematic = true;
         }
@@ -130,7 +133,7 @@ public class PlayerControls : MonoBehaviour
 
     public void OnScale(InputValue value)
     {
-        scaleFactor = value.Get<float>();
+        scaleInput = value.Get<float>();
     }
 
     public void OnCancel()
@@ -175,11 +178,11 @@ public class PlayerControls : MonoBehaviour
         {
             return;
         }
-        if (scaleFactor < 0)
+        if (scaleInput < 0)
         {
             shrinkify.ResizeObject(resizeable, sizeTime);
         }
-        else if (scaleFactor > 0)
+        else if (scaleInput > 0)
         {
             embiggen.ResizeObject(resizeable, sizeTime);
         }
