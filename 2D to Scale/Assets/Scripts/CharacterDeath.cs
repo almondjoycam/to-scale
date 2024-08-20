@@ -8,6 +8,7 @@ public class CharacterDeath : MonoBehaviour
 
     public AudioSource audioPlayer;
     public AudioClip deathSound;
+
     int currentSceneIndex;
 
     void Start()
@@ -32,3 +33,4 @@ public class CharacterDeath : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
     }
 }
+

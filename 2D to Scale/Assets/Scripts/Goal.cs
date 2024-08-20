@@ -14,7 +14,6 @@ public class Goal : MonoBehaviour
     void Start()
     {
         audioPlayer = FindObjectOfType<AudioSource>();
-//         audioPlayer.PlayOneShot(winSound); //test
     }
 
     
