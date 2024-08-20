@@ -9,7 +9,7 @@ public class Goal : MonoBehaviour
     public AudioClip winSound;
 
     void Start(){
-        audioPlayer.PlayOneShot(winSound); //test
+        //audioPlayer.PlayOneShot(winSound); //test
     }
 
     
