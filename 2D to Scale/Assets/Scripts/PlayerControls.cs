@@ -172,7 +172,7 @@ public class PlayerControls : MonoBehaviour
         {
             return;
         }
-        transform.SetParent(resizeable.GetTransform());
+        transform.SetParent(resizeable.GetTransform(), false);
         if (scaleInput < 0)
         {
             shrinkify.ResizeObject(resizeable, sizeTime);
@@ -181,6 +181,6 @@ public class PlayerControls : MonoBehaviour
         {
             embiggen.ResizeObject(resizeable, sizeTime);
         }
-        transform.SetParent(null);
+        transform.SetParent(null, true);
     }
 }
