@@ -25,15 +25,33 @@ public class ResizeableTilemap : MonoBehaviour, IResizeable
 
     IEnumerator ResizeEnumerator(float resizeTime, Vector3 formerScale)
     {
-        for (float t = 0; t < resizeTime; t += Time.fixedDeltaTime)
+        for (float t = 0; t < resizeTime; t += 0.2f)
         {
             transform.localScale = Vector3.Lerp(
                 formerScale,
                 formerScale * scaleFactor,
                 t / resizeTime
             );
-            yield return null;
+            yield return new WaitForSeconds(0.2f);
         }
         yield break;
+    }
+
+    public Vector3 ScaledPosition(Vector3 worldPoint)
+    {
+        return (worldPoint - transform.position) * scaleFactor;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (!other.collider.gameObject.CompareTag("Player"))
+        {
+            StopAllCoroutines();
+        }
     }
 }

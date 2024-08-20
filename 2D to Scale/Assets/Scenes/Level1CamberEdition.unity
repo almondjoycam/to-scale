@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 422388110}
   - component: {fileID: 422388109}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: The Cove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 575391420}
   - component: {fileID: 575391422}
   - component: {fileID: 575391423}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 575391418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.125, y: 0.125, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 422388110}
@@ -3132,11 +3132,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1002202343697396860, guid: 14abb28c5bf38b16ca3a689eb1569314, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -9.85
       objectReference: {fileID: 0}
     - target: {fileID: 1002202343697396860, guid: 14abb28c5bf38b16ca3a689eb1569314, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.22799999
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 1002202343697396860, guid: 14abb28c5bf38b16ca3a689eb1569314, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3185,11 +3185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3911340387841161465, guid: a5fc24723f5da3b79bc7c9fd2c997fe8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.501
+      value: 5.97
       objectReference: {fileID: 0}
     - target: {fileID: 3911340387841161465, guid: a5fc24723f5da3b79bc7c9fd2c997fe8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.727
+      value: 2.77
       objectReference: {fileID: 0}
     - target: {fileID: 3911340387841161465, guid: a5fc24723f5da3b79bc7c9fd2c997fe8, type: 3}
       propertyPath: m_LocalPosition.z

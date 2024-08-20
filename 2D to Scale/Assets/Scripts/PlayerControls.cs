@@ -20,10 +20,9 @@ public class PlayerControls : MonoBehaviour
     Collider2D groundCollider = null;
 
     // Gameplay
-    public float scaleFactor {
-        get;
-        private set;
-    }
+    [SerializeField]
+    float scaleFactor;
+    float scaleInput;
     [SerializeField]
     [Range(0.0f, 2.0f)]
     float sizeTime = 0.5f;
@@ -46,8 +45,8 @@ public class PlayerControls : MonoBehaviour
         rb.isKinematic = false;
         rend = GetComponent<SpriteRenderer>();
 
-        embiggen.SetScaleFactor(2);
-        shrinkify.SetScaleFactor(0.5f);
+        embiggen.SetScaleFactor(scaleFactor);
+        shrinkify.SetScaleFactor(1.0f / scaleFactor);
     }
 
     // Update is called once per frame
@@ -58,18 +57,8 @@ public class PlayerControls : MonoBehaviour
         {
             move.y += Time.fixedDeltaTime * gravityForce * rb.mass;
         }
-        else
-        {
-            rb.MovePosition((Vector2)transform.position
-                + (move * Time.fixedDeltaTime));
-        }
-//         else if (groundCollider != null)
-//         {
-//             rb.MovePosition(Physics2D.ClosestPoint(
-//                 transform.position,
-//                 groundCollider
-//             ) + Vector2.up * (rend.size.y / 2));
-//         }
+        rb.MovePosition((Vector2)transform.position
+            + (move * Time.fixedDeltaTime));
 
         // Direction
         if (move.x < 0)
@@ -81,8 +70,10 @@ public class PlayerControls : MonoBehaviour
             rend.flipX = false;
         }
 
-        PlayerResize();
-//         transform.Translate(move * speed * Time.deltaTime);
+        if (scaleInput != 0)
+        {
+            PlayerResize();
+        }
     }
 
     public void OnMove(InputValue value)
@@ -102,8 +93,8 @@ public class PlayerControls : MonoBehaviour
         if (isGrounded)
         {
             Gravity(true);
-//             move.y = jumpForce;
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            move.y = jumpForce;
+//             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 
@@ -130,7 +121,7 @@ public class PlayerControls : MonoBehaviour
 
     public void OnScale(InputValue value)
     {
-        scaleFactor = value.Get<float>();
+        scaleInput = value.Get<float>();
     }
 
     public void OnCancel()
@@ -140,7 +131,8 @@ public class PlayerControls : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.gameObject.layer == 3)
+        if (other.collider.gameObject.layer == 3
+            && other.GetContact(0).normal.y == 1)
         {
             Gravity(false);
             groundCollider = other.collider;
@@ -151,7 +143,8 @@ public class PlayerControls : MonoBehaviour
     {
         GameObject otherObj = other.collider.gameObject;
         resizeable = otherObj.GetComponent<IResizeable>();
-        if (otherObj.layer == 3)  // Ground layer
+        if (otherObj.layer == 3
+            && other.GetContact(0).normal.y == 1)  // Ground layer
         {
             Gravity(false);
             groundCollider = other.collider;
@@ -171,17 +164,15 @@ public class PlayerControls : MonoBehaviour
 
     void PlayerResize()
     {
-        if (resizeable == null)
-        {
-            return;
-        }
-        if (scaleFactor < 0)
+        transform.SetParent(resizeable.GetTransform());
+        if (scaleInput < 0)
         {
             shrinkify.ResizeObject(resizeable, sizeTime);
         }
-        else if (scaleFactor > 0)
+        else if (scaleInput > 0)
         {
             embiggen.ResizeObject(resizeable, sizeTime);
         }
+        transform.SetParent(null);
     }
 }
